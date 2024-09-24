@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalesWebMvc.Models;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace SalesWebMvc.Controllers
 {
@@ -18,6 +19,13 @@ namespace SalesWebMvc.Controllers
             return View();
         }
 
+        public IActionResult About()
+        {
+            ViewData["Message"] = "Página de controle de vendas em cSharp MVC";
+            ViewData["Creator"] = "Lucas Seitsi";
+            ViewData["Email"] = "seitsi2010@gmail.com";
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
