@@ -20,7 +20,7 @@ namespace SalesWebMvc.Services
 
         public Vendedor GetById(int id)
         {
-            return _context.Vendedor.FirstOrDefault(obj => obj.Id == id);
+            return _context.Vendedor.Include(v => v.Departamento).FirstOrDefault(obj => obj.Id == id);
         }
 
         public void Delete(int id) 
