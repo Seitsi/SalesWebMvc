@@ -1,4 +1,5 @@
-﻿using SalesWebMvc.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SalesWebMvc.Data;
 using SalesWebMvc.Models;
 
 namespace SalesWebMvc.Services
@@ -14,7 +15,7 @@ namespace SalesWebMvc.Services
 
         public List<Vendedor> FindAll()
         {
-            return _context.Vendedor.ToList();
+            return _context.Vendedor.Include(v => v.Departamento).ToList();
         }
 
         public  void Insert(Vendedor vendedor)

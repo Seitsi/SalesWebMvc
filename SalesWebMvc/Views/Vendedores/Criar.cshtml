@@ -1,4 +1,4 @@
-﻿@model SalesWebMvc.Models.Vendedor
+﻿@model SalesWebMvc.Models.ViewModels.VendedorViewModel
 @{
     ViewData["Title"] = "Criar Novo Vendedor";
 }
@@ -11,21 +11,27 @@
     <div class="col-md-4">
         <form asp-action="Criar">
             <div class="form-group">
-                <label asp-for="Nome" class="form-control-plaintext">Nome:</label>
-                <input asp-for="Nome" class="form-control"></input>
+                <label asp-for="Vendedor.Nome" class="form-control-plaintext">Nome:</label>
+                <input asp-for="Vendedor.Nome" class="form-control"></input>
             </div>
             <div class="form-group">               
-                <label asp-for="Email" class="form-control-plaintext">Email:</label>
-                <input asp-for="Email" class="form-control"></input>              
+                <label asp-for="Vendedor.Email" class="form-control-plaintext">Email:</label>
+                <input asp-for="Vendedor.Email" class="form-control"></input>
             </div>
             <div class="form-group">              
-                <label asp-for="DataNascimento" class="form-control-plaintext">Data de Nascimento:</label>
-                <input asp-for="DataNascimento" class="form-control"></input>               
+                <label asp-for="Vendedor.DataNascimento" class="form-control-plaintext">Data de Nascimento:</label>
+                <input asp-for="Vendedor.DataNascimento" class="form-control"></input>
             </div>
             <div class="form-group">               
-                <label asp-for="SalarioBase" class="form-control-plaintext">Salário Base:</label>
-                <input asp-for="SalarioBase" class="form-control"></input>
-            </div>   
+                <label asp-for="Vendedor.SalarioBase" class="form-control-plaintext">Salário Base:</label>
+                <input asp-for="Vendedor.SalarioBase" class="form-control"></input>
+            </div>  
+            <div class="form-group">
+                <label asp-for="Vendedor.DepartamentoId" class="form-control-plaintext">Departamento:</label>
+                <select asp-for="Vendedor.DepartamentoId" asp-items="@(new SelectList(Model.Departamentos, "Id", "Nome"))" class="form-control">
+                    <option value="">Selecione um Departamento</option>
+                </select>
+            </div>
             <div class="form-group mt-3">
                 <input type="submit" value="Cadastrar" class="btn btn-success"></input>
             </div>
