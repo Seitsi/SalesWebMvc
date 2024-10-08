@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Models;
 using SalesWebMvc.Models.ViewModels;
 using SalesWebMvc.Services;
@@ -37,5 +38,30 @@ namespace SalesWebMvc.Controllers
             _vendedorService.Insert(vendedor);
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var obj = _vendedorService.GetById(id.Value);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            _vendedorService.Delete(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }
