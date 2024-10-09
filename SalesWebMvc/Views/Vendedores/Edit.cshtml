@@ -1,0 +1,44 @@
+﻿@model SalesWebMvc.Models.ViewModels.VendedorViewModel
+
+@{
+    ViewData["Title"] = "Editar";
+}
+<h2>@ViewData["Title"]</h2>
+
+<h4>Vendedor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div class="form-group">
+                <input type="hidden" asp-for="Vendedor.Id" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Vendedor.Nome" class="form-control-plaintext">Nome:</label>
+                <input asp-for="Vendedor.Nome" class="form-control"></input>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vendedor.Email" class="form-control-plaintext">Email:</label>
+                <input asp-for="Vendedor.Email" class="form-control"></input>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vendedor.DataNascimento" class="form-control-plaintext">Data de Nascimento:</label>
+                <input asp-for="Vendedor.DataNascimento" class="form-control"></input>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vendedor.SalarioBase" class="form-control-plaintext">Salário Base:</label>
+                <input asp-for="Vendedor.SalarioBase" class="form-control"></input>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vendedor.DepartamentoId" class="form-control-plaintext">Departamento:</label>
+                <select asp-for="Vendedor.DepartamentoId" asp-items="@(new SelectList(Model.Departamentos, "Id", "Nome"))" class="form-control">
+                    <option value="">Selecione um Departamento</option>
+                </select>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Atualizar" class="btn btn-success me-3"></input>
+                <a asp-action="Index">Voltar para a lista</a>
+            </div>
+        </form>
+    </div>
+</div>
