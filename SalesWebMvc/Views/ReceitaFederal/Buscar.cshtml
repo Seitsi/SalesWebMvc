@@ -1,0 +1,23 @@
+﻿@model SalesWebMvc.Models.ViewModels.VendedorViewModel
+@{
+    ViewData["Title"] = "Consulta por CNPJ";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h4>Empresa</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Buscar">
+            <div class="form-group">
+                <label class="form-control-plaintext">CNPJ:</label>
+                <input class="form-control"></input>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Buscar" class="btn btn-success me-3"></input>
+                <a asp-action="Index">Voltar para a lista</a>
+            </div>
+        </form>
+    </div>
+</div>

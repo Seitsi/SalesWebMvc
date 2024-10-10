@@ -10,27 +10,33 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Criar">
+            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Vendedor.Nome" class="form-control-plaintext">Nome:</label>
                 <input asp-for="Vendedor.Nome" class="form-control"></input>
+                <span asp-validation-for="Vendedor.Nome" class="text-danger"></span>
             </div>
             <div class="form-group">               
                 <label asp-for="Vendedor.Email" class="form-control-plaintext">Email:</label>
                 <input asp-for="Vendedor.Email" class="form-control"></input>
+                <span asp-validation-for="Vendedor.Email" class="text-danger"></span>
             </div>
             <div class="form-group">              
                 <label asp-for="Vendedor.DataNascimento" class="form-control-plaintext">Data de Nascimento:</label>
                 <input asp-for="Vendedor.DataNascimento" class="form-control"></input>
+                <span asp-validation-for="Vendedor.DataNascimento" class="text-danger"></span>
             </div>
             <div class="form-group">               
                 <label asp-for="Vendedor.SalarioBase" class="form-control-plaintext">Salário Base:</label>
                 <input asp-for="Vendedor.SalarioBase" class="form-control"></input>
+                <span asp-validation-for="Vendedor.SalarioBase" class="text-danger"></span>
             </div>  
             <div class="form-group">
                 <label asp-for="Vendedor.DepartamentoId" class="form-control-plaintext">Departamento:</label>
                 <select asp-for="Vendedor.DepartamentoId" asp-items="@(new SelectList(Model.Departamentos, "Id", "Nome"))" class="form-control">
                     <option value="">Selecione um Departamento</option>
                 </select>
+                <span asp-validation-for="Vendedor.DepartamentoId" class="text-danger"></span>
             </div>
             <div class="form-group mt-3">
                 <input type="submit" value="Cadastrar" class="btn btn-success me-3"></input>
@@ -39,4 +45,10 @@
         </form>
     </div>
 </div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 
