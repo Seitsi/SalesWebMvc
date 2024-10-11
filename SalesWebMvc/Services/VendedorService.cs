@@ -14,42 +14,43 @@ namespace SalesWebMvc.Services
             _context = context;
         }
 
-        public List<Vendedor> FindAll()
+        public async Task<List<Vendedor>> FindAllAsync()
         {
-            return _context.Vendedor.Include(v => v.Departamento).ToList();
+            return await _context.Vendedor.Include(v => v.Departamento).ToListAsync();
         }
 
-        public Vendedor GetById(int id)
+        public async Task<Vendedor> FindByIdAsync(int id)
         {
-            return _context.Vendedor.Include(v => v.Departamento).FirstOrDefault(obj => obj.Id == id);
+            return await _context.Vendedor.Include(v => v.Departamento).FirstOrDefaultAsync(obj => obj.Id == id);
         }
 
-        public void Delete(int id) 
+        public async Task DeleteAsync(int id) 
         { 
-            var vendedor = _context.Vendedor.Find(id);
+            var vendedor = await _context.Vendedor.FindAsync(id);
             if (vendedor != null)
             {
                 _context.Vendedor.Remove(vendedor);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
 
-        public  void Insert(Vendedor vendedor)
+        public async Task InsertAsync(Vendedor vendedor)
         {
             _context.Add(vendedor);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(Vendedor vendedor)
+        public async Task UpdateAsync(Vendedor vendedor)
         {
-            if (!_context.Vendedor.Any(x => x.Id == vendedor.Id))
+            bool hasAny = await _context.Vendedor.AnyAsync(x => x.Id == vendedor.Id);
+            if (!hasAny)
             {
                 throw new NotFoundException("Id não encontrado!");
             }
             try
             {
                 _context.Update(vendedor);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e) 
             {
