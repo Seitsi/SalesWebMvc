@@ -16,7 +16,7 @@ namespace SalesWebMvc.Controllers
         public VendedoresController(VendedorService vendedorService, DepartamentoService departamentoService)
         {
             _vendedorService = vendedorService;
-            _departamentoService = departamentoService; 
+            _departamentoService = departamentoService;
         }
 
         public async Task<IActionResult> Index()
@@ -54,8 +54,9 @@ namespace SalesWebMvc.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction(nameof(Error), new { message = "ID não fornecido!"});
+                return RedirectToAction(nameof(Error), new { message = "ID não fornecido!" });
             }
+
             var obj = await _vendedorService.FindByIdAsync(id.Value);
             if(obj == null)
             {
@@ -78,7 +79,9 @@ namespace SalesWebMvc.Controllers
             {
                 return RedirectToAction(nameof(Error), new { message = "ID não fornecido!" });
             }
+
             var obj = await _vendedorService.FindByIdAsync(id.Value);
+
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Vendedor não encontrado!" });
@@ -93,13 +96,17 @@ namespace SalesWebMvc.Controllers
             {
                 return RedirectToAction(nameof(Error), new { message = "ID não fornecido!" });
             }
+
             var obj = await _vendedorService.FindByIdAsync(id.Value);
+
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Vendedor não encontrado!" });
             }
             var departamentos = await _departamentoService.FindAllAsync();
+
             VendedorViewModel viewModel = new VendedorViewModel { Vendedor = obj, Departamentos = departamentos};
+
             return View(viewModel);
         }
 
@@ -110,7 +117,9 @@ namespace SalesWebMvc.Controllers
             if (!ModelState.IsValid)
             {
                 var departamentos = await _departamentoService.FindAllAsync();
+
                 var viewModel = new VendedorViewModel { Departamentos= departamentos, Vendedor = vendedor};
+
                 return View(viewModel);
             }
 
