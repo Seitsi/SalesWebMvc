@@ -56,9 +56,8 @@ namespace SalesWebMvc.Controllers
             {
                 return RedirectToAction(nameof(Error), new { message = "ID não fornecido!" });
             }
-
             var obj = await _vendedorService.FindByIdAsync(id.Value);
-            if(obj == null)
+            if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Vendedor não encontrado!" });
             }
@@ -69,8 +68,15 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await _vendedorService.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _vendedorService.DeleteAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (IntegrityException e)
+            {
+                return RedirectToAction(nameof(Error), new { message = e.Message });
+            }
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -79,9 +85,7 @@ namespace SalesWebMvc.Controllers
             {
                 return RedirectToAction(nameof(Error), new { message = "ID não fornecido!" });
             }
-
             var obj = await _vendedorService.FindByIdAsync(id.Value);
-
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Vendedor não encontrado!" });
@@ -96,16 +100,13 @@ namespace SalesWebMvc.Controllers
             {
                 return RedirectToAction(nameof(Error), new { message = "ID não fornecido!" });
             }
-
             var obj = await _vendedorService.FindByIdAsync(id.Value);
-
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Vendedor não encontrado!" });
             }
             var departamentos = await _departamentoService.FindAllAsync();
-
-            VendedorViewModel viewModel = new VendedorViewModel { Vendedor = obj, Departamentos = departamentos};
+            VendedorViewModel viewModel = new VendedorViewModel { Vendedor = obj, Departamentos = departamentos };
             return View(viewModel);
         }
 
@@ -113,11 +114,11 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Vendedor vendedor)
         {
+            ModelState.Remove("Vendedor.Departamento");
             if (!ModelState.IsValid)
             {
                 var departamentos = await _departamentoService.FindAllAsync();
-
-                var viewModel = new VendedorViewModel { Departamentos= departamentos, Vendedor = vendedor};
+                var viewModel = new VendedorViewModel { Departamentos = departamentos, Vendedor = vendedor };
                 return View(viewModel);
             }
 

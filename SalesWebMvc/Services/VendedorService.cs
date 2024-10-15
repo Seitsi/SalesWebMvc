@@ -24,13 +24,20 @@ namespace SalesWebMvc.Services
             return await _context.Vendedor.Include(v => v.Departamento).FirstOrDefaultAsync(obj => obj.Id == id);
         }
 
-        public async Task DeleteAsync(int id) 
-        { 
-            var vendedor = await _context.Vendedor.FindAsync(id);
-            if (vendedor != null)
+        public async Task DeleteAsync(int id)
+        {
+            try
             {
-                _context.Vendedor.Remove(vendedor);
-                await _context.SaveChangesAsync();
+                var vendedor = await _context.Vendedor.FindAsync(id);
+                if (vendedor != null)
+                {
+                    _context.Vendedor.Remove(vendedor);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (DbUpdateException e)          
+            {
+                throw new IntegrityException(e.Message);
             }
         }
 
