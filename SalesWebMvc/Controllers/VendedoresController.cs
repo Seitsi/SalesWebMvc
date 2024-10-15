@@ -106,7 +106,6 @@ namespace SalesWebMvc.Controllers
             var departamentos = await _departamentoService.FindAllAsync();
 
             VendedorViewModel viewModel = new VendedorViewModel { Vendedor = obj, Departamentos = departamentos};
-
             return View(viewModel);
         }
 
@@ -119,7 +118,6 @@ namespace SalesWebMvc.Controllers
                 var departamentos = await _departamentoService.FindAllAsync();
 
                 var viewModel = new VendedorViewModel { Departamentos= departamentos, Vendedor = vendedor};
-
                 return View(viewModel);
             }
 
