@@ -6,33 +6,35 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar bg-dark mb-4">
     <div class="container-fluid">
         <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
+            <div class="d-flex gap-3 align-items-center">
                 <div class="form-group">
                     <label for="dataMin">Data Mínima</label>
-                    <input type="date" class="form-control" name="minData" 
-                    value="@(((DateTime?)ViewData["DataMin"])?.ToString("yyyy-MM-dd"))" />
+                    <input type="date" class="form-control" name="minData"
+                           value="@(((DateTime?)ViewData["DataMin"])?.ToString("yyyy-MM-dd"))" />
                 </div>
                 <div class="form-group">
                     <label for="dataMax">Data Máxima</label>
                     <input type="date" class="form-control" name="maxData"
-                     value="@(((DateTime?)ViewData["DataMax"])?.ToString("yyyy-MM-dd"))" />
+                           value="@(((DateTime?)ViewData["DataMax"])?.ToString("yyyy-MM-dd"))" />
                 </div>
-                <button type="submit" class="btn btn-primary mt-3">Filtrar</button>
+                <button type="submit" class="btn btn-primary ml-3">Filtrar</button>
             </div>
         </form>
     </div>
 </nav>
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">Total de Vendas = @Model.Sum(obj => obj.Valor).ToString("F2")</h3>
+
+<!-- Painel substituído por Card do Bootstrap -->
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h3 class="card-title">Total de Vendas = @Model.Sum(obj => obj.Valor).ToString("F2")</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <table class="table table-striped table-hover">
             <thead>
-                <tr class="success">
+                <tr class="table-success">
                     <th>
                         @Html.DisplayNameFor(model => model.Id)
                     </th>
