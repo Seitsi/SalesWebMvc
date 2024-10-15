@@ -28,14 +28,33 @@ namespace SalesWebMvc.Controllers
             {
                 maxData = DateTime.Now;
             }
+
             ViewData["DataMin"] = minData;
             ViewData["DataMax"] = maxData;
+
             var result = await _vendaService.FindByDateAsync(minData, maxData);
+
             return View(result);
         }
-        public IActionResult BuscaAgrupada()
+        public async Task<IActionResult> BuscaAgrupada(DateTime? minData, DateTime? maxData)
         {
-            return View();
+            if (!minData.HasValue)
+            {
+                minData = new DateTime(DateTime.Now.Year, 1, 1);
+            }
+
+            if (!maxData.HasValue)
+            {
+                maxData = DateTime.Now;
+            }
+
+            ViewData["DataMin"] = minData;
+            ViewData["DataMax"] = maxData;
+
+            var result = await _vendaService.FindByDateGroupingAsync(minData, maxData);
+
+            return View(result);
         }
+        
     }
 }
