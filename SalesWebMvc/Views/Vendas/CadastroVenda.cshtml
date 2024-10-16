@@ -1,0 +1,49 @@
+﻿@model SalesWebMvc.Models.ViewModels.VendaViewModel
+
+@{
+    ViewData["Title"] = "Cadastro de Venda";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h4>Venda</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CadastroVenda">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group mt-3">
+                <label asp-for="Venda.VendedorId">Vendedor:</label>
+                <select asp-for="Venda.VendedorId" class="form-control" asp-items="@(new SelectList(Model.Vendedores, "Id", "Nome"))">
+                    <option value="">Selecione o vendedor</option>
+                </select>
+            </div>
+            <div class="form-group mt-3">
+                <label asp-for="Venda.Data" class="form-control-plaintext">Data da Venda:</label>
+                <input asp-for="Venda.Data" class="form-control"/>
+                <span asp-validation-for="Venda.Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Venda.Valor" class="form-control-plaintext">Valor:</label>
+                <input asp-for="Venda.Valor" class="form-control"/>
+                <span asp-validation-for="Venda.Valor" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <label asp-for="Venda.Status">Status:</label>
+                <select asp-for="Venda.Status" class="form-control" asp-items="@(new SelectList(Model.Status))">
+                    <option value="">Selecione um status</option>
+                </select>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Cadastrar" class="btn btn-success me-3"/>
+                <a asp-action="Index">Voltar para a lista</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

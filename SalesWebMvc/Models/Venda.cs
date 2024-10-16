@@ -11,6 +11,8 @@ namespace SalesWebMvc.Models
         [DisplayFormat(DataFormatString ="{0:F2}")]
         public double Valor { get; set; }
         public StatusVenda Status { get; set; }
+        [Required(ErrorMessage = "O vendedor é obrigatório")]
+        public int VendedorId { get; set; }
         public Vendedor Vendedor { get; set; }
 
         public Venda() 
