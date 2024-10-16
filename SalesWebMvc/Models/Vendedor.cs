@@ -58,7 +58,7 @@ namespace SalesWebMvc.Models
 
         public double TotalVendas(DateTime dataInicio, DateTime dataFim)
         {
-            return Vendas.Where(venda => venda.Data >= dataInicio && venda.Data <= dataFim).Sum(venda => venda.Valor);
+            return Vendas.Where(venda => venda.Data >= dataInicio && venda.Data <= dataFim && venda.Status == Enums.StatusVenda.PAGO).Sum(venda => venda.Valor);
         }
     }
 }
