@@ -18,7 +18,8 @@ builder.Services.AddDbContext<SalesWebMvcContext>(options =>
 builder.Services.AddScoped<SeedingService>();
 builder.Services.AddScoped<VendedorService>();
 builder.Services.AddScoped<DepartamentoService>();
-builder.Services.AddScoped<VendaService>();
+builder.Services.AddScoped<VendaService>(); 
+builder.Services.AddScoped<LoginService>();
 
 var enUS = new CultureInfo("pt-BR");
 var localizationOptions = new RequestLocalizationOptions
