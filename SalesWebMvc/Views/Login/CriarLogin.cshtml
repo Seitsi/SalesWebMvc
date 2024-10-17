@@ -1,0 +1,104 @@
+﻿@model SalesWebMvc.Models.Login
+
+<h2>Cadastro de Novo Usuário</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CriarLogin">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="User" class="form-control-plaintext">Usuário:</label>
+                <input asp-for="User" class="form-control" />
+                <span asp-validation-for="User" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="form-control-plaintext">Email:</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cpf" class="form-control-plaintext">CPF:</label>
+                <input asp-for="Cpf" class="form-control" id="cpfInput" />
+                <span asp-validation-for="Cpf" class="text-danger"></span>
+                <p id="cpfFeedback" class="text-danger"></p> 
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="form-control-plaintext">Celular:</label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="form-control-plaintext">Senha:</label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="form-control-plaintext">Confirmar Senha:</label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Cadastrar" class="btn btn-success me-3" />
+                <a asp-action="Index">Voltar para a área de Login</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                function validarCPF(cpf) {
+                    cpf = cpf.replace(/[^\d]+/g, ''); // Remove caracteres não numéricos
+
+                    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
+                        return false; // Verifica se tem 11 dígitos e se não são todos iguais
+                    }
+
+                    let soma = 0;
+                    let resto;
+
+                    for (let i = 1; i <= 9; i++) {
+                        soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+                    }
+
+                    resto = (soma * 10) % 11;
+                    if (resto === 10 || resto === 11) resto = 0;
+                    if (resto !== parseInt(cpf.substring(9, 10))) {
+                        return false;
+                    }
+
+                    soma = 0;
+                    for (let i = 1; i <= 10; i++) {
+                        soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+                    }
+
+                    resto = (soma * 10) % 11;
+                    if (resto === 10 || resto === 11) resto = 0;
+                    if (resto !== parseInt(cpf.substring(10, 11))) {
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                document.getElementById("cpfInput").addEventListener("input", function () {
+                    const cpf = this.value;
+                    const feedback = document.getElementById("cpfFeedback");
+
+                    if (validarCPF(cpf)) {
+                        feedback.textContent = "CPF válido!";
+                        feedback.style.color = "green"; 
+                    } else {
+                        feedback.textContent = "CPF inválido!";
+                        feedback.style.color = "red"; 
+                    }
+                });
+            });
+        </script>
+
+    }
+}
