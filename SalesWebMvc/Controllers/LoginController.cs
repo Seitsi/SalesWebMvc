@@ -2,6 +2,7 @@
 using SalesWebMvc.Models;
 using SalesWebMvc.Models.ViewModels;
 using SalesWebMvc.Services;
+using SalesWebMvc.Services.Exceptions;
 
 namespace SalesWebMvc.Controllers
 {
@@ -26,13 +27,32 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CriarLogin(Login login)
         {
-            var loginAjustado = _loginService.ValidateLogin(login);
+            var loginAjustado = _loginService.ValidateCadastroLogin(login);
             if (login.Ativo == false)
             {
                 return View(login);
             }
+
             await _loginService.InsertAsync(loginAjustado);
+            TempData["Sucesso"] = "Usuário cadastrado com sucesso!";
             return RedirectToAction(nameof(Index));
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logar(Login login)
+        {
+            try
+            {
+                var valid = _loginService.ValidateLogin(login);
+                TempData["Sucesso"] = "Usuário logado com sucesso!";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (ValidateLoginException e)
+            {
+                TempData["Erro"] = e.Message; // Armazenar a mensagem de erro
+            }
+
+            return View(login); // Retornar à view com o modelo de login
         }
         public IActionResult EsqueciSenha()
         {

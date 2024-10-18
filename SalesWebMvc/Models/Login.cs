@@ -10,7 +10,8 @@ namespace SalesWebMvc.Models
         public string User { get; set; }
         [Required(ErrorMessage = "O campo Senha é obrigatório.")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
+        public string? Password { get; set; }
         public string Email { get; set; }
         [Required(ErrorMessage = "O campo Celular é obrigatório.")]
         [RegularExpression(@"^\+?[0-9\s\-\(\)]*$", ErrorMessage = "Insira um número de telefone válido.")]
@@ -24,37 +25,21 @@ namespace SalesWebMvc.Models
         [Required(ErrorMessage = "Confirme a sua senha.")]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "As senhas não coincidem.")]
-        public string ConfirmPassword { get; set; }
+        public string ConfirmPasswordHash { get; set; }
 
         public Login() { }
-        public Login(int id, string user, string password, string email, string phoneNumber, string cpf, bool ativo, TipoUsuario tipoUsuario, bool logado)
+        public Login(int id, string user, string passwordHash, string email, string phoneNumber, string cpf, bool ativo, TipoUsuario tipoUsuario, bool logado, string confirmPasswordHash)
         {
             Id = id;
             User = user;
-            Password = password;
+            PasswordHash = passwordHash;
             Email = email;
             PhoneNumber = phoneNumber;
             Cpf = cpf;
             Ativo = true;
             TipoUsuario = tipoUsuario;
             Logado = false;
-        }
-
-        //public void ValidaLogin(string user, string password)
-        //{
-        //    if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(password))
-        //    {
-        //        thwo
-        //    }
-        //}
-
-        public void CriarNovoLogin(Login user)
-        {
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
-
+            ConfirmPasswordHash = confirmPasswordHash;
         }
 
         public string CpfRegex(string cpf)

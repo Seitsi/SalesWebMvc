@@ -28,14 +28,14 @@
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="form-control-plaintext">Senha:</label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+                <label asp-for="PasswordHash" class="form-control-plaintext">Senha:</label>
+                <input asp-for="PasswordHash" class="form-control" />
+                <span asp-validation-for="PasswordHash" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ConfirmPassword" class="form-control-plaintext">Confirmar Senha:</label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                <label asp-for="ConfirmPasswordHash" class="form-control-plaintext">Confirmar Senha:</label>
+                <input asp-for="ConfirmPasswordHash" class="form-control" />
+                <span asp-validation-for="ConfirmPasswordHash" class="text-danger"></span>
             </div>
             <div class="form-group mt-3">
                 <input type="submit" value="Cadastrar" class="btn btn-success me-3" />
