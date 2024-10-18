@@ -57,10 +57,11 @@ namespace SalesWebMvc.Models
 
         }
 
-        public bool IsCpfValid(string cpf)
+        public string CpfRegex(string cpf)
         {
-            //
-            return true;
+            cpf = cpf.Replace(".", "").Replace("-", "");           
+            return cpf;
         }
+
     }
 }
