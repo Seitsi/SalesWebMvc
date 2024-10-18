@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Models;
 
 namespace SalesWebMvc.Data
 {
-    public class SalesWebMvcContext : DbContext
+    public class SalesWebMvcContext : IdentityDbContext<IdentityUser> 
     {
-        public SalesWebMvcContext (DbContextOptions<SalesWebMvcContext> options)
+        public SalesWebMvcContext(DbContextOptions<SalesWebMvcContext> options)
             : base(options)
         {
         }

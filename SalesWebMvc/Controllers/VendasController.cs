@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SalesWebMvc.Models;
 using SalesWebMvc.Models.Enums;
 using SalesWebMvc.Models.ViewModels;
@@ -6,6 +7,7 @@ using SalesWebMvc.Services;
 
 namespace SalesWebMvc.Controllers
 {
+    [Authorize]
     public class VendasController : Controller
     {
         private readonly VendaService _vendaService;

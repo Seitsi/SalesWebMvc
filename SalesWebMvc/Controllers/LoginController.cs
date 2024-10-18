@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using SalesWebMvc.Models;
 using SalesWebMvc.Models.ViewModels;
 using SalesWebMvc.Services;
@@ -9,9 +10,12 @@ namespace SalesWebMvc.Controllers
     public class LoginController : Controller
     {
         private readonly LoginService _loginService;
-        public LoginController(LoginService loginService)
+        private readonly SignInManager<IdentityUser> _signInManager;
+
+        public LoginController(LoginService loginService, SignInManager<IdentityUser> signInManager)
         {
             _loginService = loginService;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
@@ -44,15 +48,26 @@ namespace SalesWebMvc.Controllers
             try
             {
                 var valid = _loginService.ValidateLogin(login);
-                TempData["Sucesso"] = "Usuário logado com sucesso!";
-                return RedirectToAction(nameof(Index));
+
+                // Autenticar o usuário
+                var result = await _signInManager.PasswordSignInAsync(login.Email, login.PasswordHash, isPersistent: false, lockoutOnFailure: false);
+
+                if (result.Succeeded)
+                {
+                    TempData["Sucesso"] = "Usuário logado com sucesso!";
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    TempData["Erro"] = "Falha na autenticação";
+                }
             }
             catch (ValidateLoginException e)
             {
-                TempData["Erro"] = e.Message; // Armazenar a mensagem de erro
+                TempData["Erro"] = e.Message; 
             }
 
-            return View(login); // Retornar à view com o modelo de login
+            return RedirectToAction(nameof(Index));
         }
         public IActionResult EsqueciSenha()
         {

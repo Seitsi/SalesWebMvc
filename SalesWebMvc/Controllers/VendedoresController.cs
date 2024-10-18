@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Models;
 using SalesWebMvc.Models.ViewModels;
@@ -8,6 +9,7 @@ using System.Diagnostics;
 
 namespace SalesWebMvc.Controllers
 {
+    [Authorize]
     public class VendedoresController : Controller
     {
         private readonly VendedorService _vendedorService;
