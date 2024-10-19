@@ -11,11 +11,12 @@ namespace SalesWebMvc.Controllers
     {
         private readonly LoginService _loginService;
         private readonly SignInManager<IdentityUser> _signInManager;
-
-        public LoginController(LoginService loginService, SignInManager<IdentityUser> signInManager)
+        private readonly UserManager<IdentityUser> _userManager;
+        public LoginController(LoginService loginService, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
             _loginService = loginService;
             _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -31,14 +32,29 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CriarLogin(Login login)
         {
-            var loginAjustado = _loginService.ValidateCadastroLogin(login);
-            if (login.Ativo == false)
+            try
             {
-                return View(login);
+                var user = new IdentityUser
+                {
+                    UserName = login.Email,
+                    Email = login.Email
+                };
+
+                var result = await _userManager.CreateAsync(user, login.PasswordHash);
+
+                if (result.Succeeded)
+                {
+                    var loginAjustado = _loginService.ValidateCadastroLogin(login);
+                    await _loginService.InsertAsync(loginAjustado);
+                    TempData["Sucesso"] = "Usuário cadastrado com sucesso!";
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (ValidateLoginException e)
+            {
+                TempData["Erro"] = "Falha ao Cadastrar Novo Usuário!";
             }
 
-            await _loginService.InsertAsync(loginAjustado);
-            TempData["Sucesso"] = "Usuário cadastrado com sucesso!";
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]
@@ -49,13 +65,13 @@ namespace SalesWebMvc.Controllers
             {
                 var valid = _loginService.ValidateLogin(login);
 
-                // Autenticar o usuário
+                // aki autentica
                 var result = await _signInManager.PasswordSignInAsync(login.Email, login.PasswordHash, isPersistent: false, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {
                     TempData["Sucesso"] = "Usuário logado com sucesso!";
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -68,6 +84,15 @@ namespace SalesWebMvc.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            TempData["Sucesso"] = "Você saiu com sucesso!";
+            return RedirectToAction("Index", "Home");
         }
         public IActionResult EsqueciSenha()
         {

@@ -73,7 +73,7 @@ namespace SalesWebMvc.Services
                 throw new ValidateLoginException("Senha incorreta.");
             }
 
-            return login;
+            return usuario;
         }
 
         private bool IsValidEmail(string email)

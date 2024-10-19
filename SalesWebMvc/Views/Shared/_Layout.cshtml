@@ -44,7 +44,18 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="ReceitaFederal" asp-action="Index">Receita</a>
                         </li>
                     </ul>
-                    <a class="btn btn-light ms-auto" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <form asp-area="" asp-controller="Login" asp-action="Logout" method="post" class="form-inline">
+                                <button type="submit" class="btn btn-light">Logout</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <a class="btn btn-light ms-auto" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+                    }
                 </div>
             </div>
         </nav>
