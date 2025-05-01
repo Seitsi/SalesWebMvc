@@ -18,8 +18,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Treino\" />
-  </ItemGroup>
-
 </Project>

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<SalesWebMvc.Models.Treino>
+
+@{
+    ViewData["Title"] = "Tabela de Treinos";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a asp-action="Criar" class="btn btn-dark">Adicionar Treino</a>
+</p>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr class="table-success">
+            <th>
+                @Html.DisplayNameFor(model => model.TipoTreino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Series)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Repeticoes)
+            </th>
+            <td>
+                @Html.DisplayNameFor(model => model.Peso)
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Data)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoTreino)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Series)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Repeticoes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Peso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

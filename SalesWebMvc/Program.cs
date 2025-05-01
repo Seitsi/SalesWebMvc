@@ -38,6 +38,7 @@ builder.Services.AddScoped<VendedorService>();
 builder.Services.AddScoped<DepartamentoService>();
 builder.Services.AddScoped<VendaService>();
 builder.Services.AddScoped<LoginService>();
+builder.Services.AddScoped<TreinoService>();
 
 var enUS = new CultureInfo("pt-BR");
 var localizationOptions = new RequestLocalizationOptions
